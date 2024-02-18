@@ -10,6 +10,9 @@ function authMiddleware(req, res, next) {
   try {
     const token = authHeader.split(" ")[1];
     const { userId } = jwt.decode(token, JWT_SECRET);
+    if (!userId) {
+      throw new Error();
+    }
     req.userId = userId;
     next();
   } catch (error) {
